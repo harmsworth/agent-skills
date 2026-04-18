@@ -8,5 +8,5 @@
   },
   "repository": "https://github.com/harmsworth/agent-skills",
   "keywords": ["skills", "multi-agent", "video-editing", "ffmpeg", "droid"],
-  "skills": "./skills"
+  "skills": ["./skills"]
 }

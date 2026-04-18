@@ -1,6 +1,6 @@
 ---
 name: auto-editor
-description: Talking-head video auto-editor powered by FFmpeg and AI semantic analysis. Detects mistakes, repetitions, silence, and filler words, generates review UI, and exports with one-click cutting. Cross-platform: macOS, Linux, WSL2. Triggers: auto-editor, video cut, talking-head, subtitle, export hd, speech editing, video edit, clip video
+description: "Talking-head video auto-editor powered by FFmpeg and AI semantic analysis. Detects mistakes, repetitions, silence, and filler words, generates review UI, and exports with one-click cutting. Cross-platform: macOS, Linux, WSL2. Triggers: auto-editor, video cut, talking-head, subtitle, export hd, speech editing, video edit, clip video"
 user_invocable: true
 version: "1.0.0"
 ---
