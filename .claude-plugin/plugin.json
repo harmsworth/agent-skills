@@ -1,0 +1,12 @@
+{
+  "name": "agent-skills",
+  "version": "1.0.0",
+  "description": "Multi-skill collection for the Droid Mission Framework and AI-powered video editing workflows",
+  "author": {
+    "name": "harmsworth",
+    "url": "https://github.com/harmsworth"
+  },
+  "repository": "https://github.com/harmsworth/agent-skills",
+  "keywords": ["skills", "multi-agent", "video-editing", "ffmpeg", "droid"],
+  "skills": "./skills"
+}

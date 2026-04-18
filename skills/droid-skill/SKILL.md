@@ -1,6 +1,8 @@
 ---
-name: Droid Mission Framework
-description: Universal multi-agent software development framework derived from Droid's Mission System. Works with any LLM.
+name: droid-mission-framework
+description: Universal multi-agent software development framework derived from Droid's Mission System. Works with any LLM. Triggers: droid, mission framework, plan project, orchestrator, worker, validator
+user_invocable: true
+version: "1.0.0"
 ---
 
 # Droid Mission Framework (Universal)

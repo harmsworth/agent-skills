@@ -1,17 +1,6 @@
----
-name: auto-editor
-description: Talking-head video auto-editor powered by FFmpeg and AI semantic analysis. Detects mistakes, repetitions, silence, and filler words, generates review UI, and exports with one-click cutting. Cross-platform: macOS, Linux, WSL2. Triggers: auto-editor, video cut, talking-head, subtitle, export hd, speech editing, video edit, clip video
-user_invocable: true
-version: "1.0.0"
----
-
 # Auto-Editor — AI-Powered Talking-Head Video Editor
 
 An FFmpeg-based automated editing pipeline for talking-head videos, combining cloud ASR transcription with AI semantic analysis.
-
-Addresses two major pain points of template-based editing tools:
-1. **No semantic understanding**: They can only do pattern matching (silence, repeated words), missing natural corrections like "What I meant was..."
-2. **Poor subtitle quality**: Technical terms (Claude Code, MCP, API) are frequently misrecognized
 
 ## Quick Start
 
@@ -50,7 +39,7 @@ Steps:
 6. **Generate review page** — `review.html`, open in browser to confirm
 7. **Execute cut** — FFmpeg frame-accurate cutting
 
-**Detection rules (by priority)**:
+**Detection rules (by priority):**
 
 | Type | Detection | Deletion Range |
 |------|-----------|----------------|
@@ -73,7 +62,7 @@ Cut video → Cloud ASR (with custom dictionary) → Agent line-by-line proofrea
 
 Subtitle style: 22pt golden bold, 2px black stroke, bottom-center.
 
-**Proofreading principles (fix only, never add)**:
+**Proofreading principles (fix only, never add):**
 - Names must be checked (dictionary hints don't guarantee 100% accuracy)
 - Merge fragments ("音画"+"同步"→"音画同步")
 - No punctuation at sentence end, keep punctuation within sentence

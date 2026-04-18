@@ -1,0 +1,36 @@
+{
+  "name": "agent-skills",
+  "displayName": "Agent Skills Collection",
+  "description": "Multi-agent software development framework and AI-powered video editing tools for Claude Code",
+  "version": "1.0.0",
+  "owner": {
+    "name": "harmsworth",
+    "url": "https://github.com/harmsworth"
+  },
+  "repository": "https://github.com/harmsworth/agent-skills",
+  "license": "MIT",
+  "keywords": [
+    "skills",
+    "multi-agent",
+    "droid",
+    "mission-framework",
+    "video-editing",
+    "ffmpeg",
+    "talking-head",
+    "subtitle",
+    "software-development"
+  ],
+  "categories": [
+    "Productivity",
+    "Development",
+    "Content Creation"
+  ],
+  "plugins": [
+    {
+      "name": "agent-skills",
+      "description": "Agent skills collection: Droid Mission Framework + Auto-Editor",
+      "version": "1.0.0",
+      "source": "./"
+    }
+  ]
+}
