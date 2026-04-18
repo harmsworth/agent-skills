@@ -1,15 +1,6 @@
 ---
 name: auto-editor
-description: Talking-head video auto-editor powered by FFmpeg and AI semantic analysis. Detects mistakes, repetitions, silence, and filler words, generates review UI, and exports with one-click cutting. Triggers: auto-editor, video cut, talking-head, subtitle, export hd
-license: MIT
-metadata:
-  author: https://github.com/harmsworth
-  version: "1.0.0"
-  domain: video-editing
-  triggers: auto-editor, video cut, talking-head, subtitle, export hd, speech editing
-  role: specialist
-  scope: implementation
-  output-format: code
+description: Talking-head video auto-editor powered by FFmpeg and AI semantic analysis. Detects mistakes, repetitions, silence, and filler words, generates review UI, and exports with one-click cutting. Triggers: auto-editor, video cut, talking-head, subtitle, export hd, speech editing
 ---
 
 # Auto-Editor — AI-Powered Talking-Head Video Editor
