@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-# Videocut 环境检测与安装脚本
-# 支持：macOS、Linux（Ubuntu/Debian/CentOS/Arch）、WSL2
+# Auto-Editor Environment Check & Installer
+# Supports: macOS, Linux (Ubuntu/Debian/CentOS/Arch), WSL2
 #
 
 set -euo pipefail
@@ -37,106 +37,106 @@ check_command() {
 }
 
 echo "================================================"
-echo "   Videocut 环境检测"
+echo "   Auto-Editor Environment Check"
 echo "================================================"
 
 OS=$(detect_os)
-log_info "检测到系统: $OS"
+log_info "Detected OS: $OS"
 
-# --- 检查 Node.js ---
+# --- Check Node.js ---
 if check_command node; then
     NODE_VER=$(node -v)
-    log_ok "Node.js 已安装: $NODE_VER"
+    log_ok "Node.js installed: $NODE_VER"
 else
-    log_warn "Node.js 未安装"
+    log_warn "Node.js not found"
     case $OS in
         macos)
-            log_info "安装命令: brew install node"
+            log_info "Install: brew install node"
             ;;
         linux|wsl2)
-            log_info "安装命令: sudo apt update && sudo apt install -y nodejs npm"
+            log_info "Install: sudo apt update && sudo apt install -y nodejs npm"
             ;;
     esac
 fi
 
-# --- 检查 FFmpeg ---
+# --- Check FFmpeg ---
 if check_command ffmpeg; then
     FF_VER=$(ffmpeg -version | head -1)
-    log_ok "FFmpeg 已安装: ${FF_VER:0:50}"
+    log_ok "FFmpeg installed: ${FF_VER:0:50}"
 else
-    log_warn "FFmpeg 未安装"
+    log_warn "FFmpeg not found"
     case $OS in
         macos)
-            log_info "安装命令: brew install ffmpeg"
+            log_info "Install: brew install ffmpeg"
             ;;
         linux|wsl2)
-            log_info "安装命令: sudo apt update && sudo apt install -y ffmpeg"
+            log_info "Install: sudo apt update && sudo apt install -y ffmpeg"
             ;;
     esac
 fi
 
-# --- 检查 curl ---
+# --- Check curl ---
 if check_command curl; then
-    log_ok "curl 已安装"
+    log_ok "curl installed"
 else
-    log_warn "curl 未安装"
+    log_warn "curl not found"
 fi
 
-# --- 检查火山引擎 API Key ---
+# --- Check ASR API Key ---
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 ENV_FILE="$(dirname "$SCRIPT_DIR")/config/.env"
 
 if [ -f "$ENV_FILE" ]; then
-    if grep -q "VOLCENGINE_API_KEY=" "$ENV_FILE"; then
-        API_KEY=$(grep "VOLCENGINE_API_KEY=" "$ENV_FILE" | cut -d'=' -f2 | head -1)
+    if grep -q "ASR_API_KEY=" "$ENV_FILE"; then
+        API_KEY=$(grep "ASR_API_KEY=" "$ENV_FILE" | cut -d'=' -f2 | head -1)
         if [ -n "$API_KEY" ] && [ "$API_KEY" != "your_api_key_here" ]; then
-            log_ok "火山引擎 API Key 已配置"
+            log_ok "ASR API Key configured"
         else
-            log_warn "火山引擎 API Key 未填写"
-            log_info "请编辑: $ENV_FILE"
+            log_warn "ASR API Key not filled in"
+            log_info "Edit: $ENV_FILE"
         fi
     else
-        log_warn "火山引擎 API Key 未配置"
-        log_info "请编辑: $ENV_FILE"
+        log_warn "ASR API_KEY not configured"
+        log_info "Edit: $ENV_FILE"
     fi
 else
-    log_warn "配置文件不存在: $ENV_FILE"
-    log_info "请创建: cp $(dirname "$SCRIPT_DIR")/config/.env.example $(dirname "$SCRIPT_DIR")/config/.env"
+    log_warn "Config file not found: $ENV_FILE"
+    log_info "Create: cp $(dirname "$SCRIPT_DIR")/config/.env.example $(dirname "$SCRIPT_DIR")/config/.env"
 fi
 
-# --- 检查中文字体（字幕用）---
+# --- Check CJK fonts (for subtitle burn-in) ---
 if check_command fc-list; then
     CN_FONT=$(fc-list :lang=zh -f "%{family}\n" 2>/dev/null | head -1)
     if [ -n "$CN_FONT" ]; then
-        log_ok "中文字体已安装: $CN_FONT"
+        log_ok "CJK font installed: $CN_FONT"
     else
-        log_warn "未检测到中文字体（字幕烧录可能失败）"
+        log_warn "No CJK font detected (subtitle burn-in may fail)"
         case $OS in
             linux|wsl2)
-                log_info "安装命令: sudo apt install -y fonts-noto-cjk"
+                log_info "Install: sudo apt install -y fonts-noto-cjk"
                 ;;
         esac
     fi
 else
-    log_warn "fontconfig 未安装（无法检测字体）"
+    log_warn "fontconfig not installed (cannot detect fonts)"
 fi
 
 echo ""
 echo "================================================"
 
-# 汇总
+# Summary
 MISSING=0
 if ! check_command node; then MISSING=$((MISSING+1)); fi
 if ! check_command ffmpeg; then MISSING=$((MISSING+1)); fi
 if ! check_command curl; then MISSING=$((MISSING+1)); fi
 
 if [ "$MISSING" -eq 0 ]; then
-    echo -e "${GREEN}环境检查通过，可以开始使用 videocut！${NC}"
+    echo -e "${GREEN}Environment check passed. Ready to use auto-editor!${NC}"
     echo ""
-    log_info "快速开始:"
-    echo "  /videocut 剪口播 video.mp4"
-    echo "  /videocut 字幕 video.mp4"
-    echo "  /videocut 高清化 video.mp4"
+    log_info "Quick start:"
+    echo "  /auto-editor cut video.mp4"
+    echo "  /auto-editor subtitle video.mp4"
+    echo "  /auto-editor export-hd video.mp4"
 else
-    echo -e "${YELLOW}缺少 $MISSING 个依赖，请按上方提示安装${NC}"
+    echo -e "${YELLOW}$MISSING dependencies missing, install per instructions above${NC}"
 fi

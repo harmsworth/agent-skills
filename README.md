@@ -1,4 +1,4 @@
-# harmsworth/droid-skill
+# harmsworth/agent-skills
 
 [![English](https://img.shields.io/badge/lang-English-blue.svg)](README.md)
 [![简体中文](https://img.shields.io/badge/lang-简体中文-red.svg)](README.zh-CN.md)
@@ -12,7 +12,7 @@ This is a monorepo-style skill package. It currently contains one main skill:
 | Skill | Path | Description |
 |-------|------|-------------|
 | **droid-skill** | [`skills/droid-skill/`](skills/droid-skill/) | The complete mission framework: planning, worker execution, code review, user testing, and worker design. |
-| **videocut** | [`skills/videocut/`](skills/videocut/) | 口播视频智能剪辑。自动识别口误/重复/静音/卡顿，生成审核页面，一键 FFmpeg 剪辑导出。跨平台支持 macOS/Linux/WSL2。 |
+| **auto-editor** | [`skills/auto-editor/`](skills/auto-editor/) | 口播视频智能剪辑。自动识别口误/重复/静音/卡顿，生成审核页面，一键 FFmpeg 剪辑导出。跨平台支持 macOS/Linux/WSL2。 |
 
 ## Installation
 
@@ -20,7 +20,7 @@ Install the `droid-skill` skill into your agent's global skills directory. The e
 
 ```bash
 # Example pattern (replace with your actual skill installer)
-npx <skill-installer> harmsworth/droid-skill/droid-skill
+npx <skill-installer> harmsworth/agent-skills/droid-skill
 ```
 
 Or manually copy it:

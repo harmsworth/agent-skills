@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 /**
- * 从火山引擎结果生成字级别字幕
+ * Generate word-level subtitle data from ASR result
  *
- * 用法: node generate_subtitles.js <volcengine_result.json> [delete_segments.json]
- * 输出: subtitles_words.json
+ * Usage: node generate_subtitles.js <asr_result.json> [delete_segments.json]
+ * Output: subtitle_words.json
  */
 
 const fs = require('fs');
 const path = require('path');
 
-const resultFile = process.argv[2] || 'volcengine_result.json';
+const resultFile = process.argv[2] || 'asr_result.json';
 const deleteFile = process.argv[3];
 
 if (!fs.existsSync(resultFile)) {

@@ -1,8 +1,8 @@
 {
-  "name": "videocut",
-  "version": "2.0.0",
-  "description": "口播视频智能剪辑。自动识别口误/重复/静音/卡顿，生成审核页面，一键 FFmpeg 剪辑导出。跨平台支持 macOS/Linux/WSL2。",
-  "author": "https://github.com/Ceeon",
+  "name": "auto-editor",
+  "version": "1.0.0",
+  "description": "Talking-head video auto-editor powered by FFmpeg and AI semantic analysis. Detects mistakes, repetitions, silence, and filler words, generates review UI, and exports with one-click cutting. Cross-platform: macOS, Linux, WSL2.",
+  "author": "https://github.com/harmsworth",
   "license": "MIT",
   "entry": "SKILL.md",
   "files": [
