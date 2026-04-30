@@ -1,0 +1,13 @@
+{
+  "name": "frontend-code-review",
+  "version": "1.0.0",
+  "description": "Frontend AI code review scoring system for Vue 3 / TypeScript / JavaScript. Reviews code against 5 dimensions: naming, comments, TS standards, Vue conventions, and JS logic quality.",
+  "author": "",
+  "license": "MIT",
+  "entry": "SKILL.md",
+  "files": [
+    "SKILL.md",
+    "README.md",
+    "prompts/review-prompt.md"
+  ]
+}
