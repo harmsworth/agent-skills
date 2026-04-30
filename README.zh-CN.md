@@ -11,6 +11,7 @@
 |------|------|------|
 | **droid-skill** | [`skills/droid-skill/`](skills/droid-skill/) | Droid 任务框架：项目规划、工作执行、代码审查、用户测试、工作角色设计。兼容任意 LLM。 |
 | **auto-editor** | [`skills/auto-editor/`](skills/auto-editor/) | 口播视频智能剪辑。自动识别口误/重复/静音/卡顿，生成审核页面，一键 FFmpeg 剪辑导出。跨平台支持 macOS/Linux/WSL2。 |
+| **frontend-code-review** | [`skills/frontend-code-review/`](skills/frontend-code-review/) | 前端代码审查评分系统。针对 Vue 3 / TypeScript / JavaScript，从 5 个维度（命名、注释、TS 规范、Vue 规范、JS 逻辑）进行评分，支持 P0-P3 等级评定。 |
 
 ## 安装
 
@@ -23,6 +24,7 @@ npx skills add harmsworth/agent-skills -g --all
 # 安装单个技能
 npx skills add harmsworth/agent-skills -g --skill droid-skill
 npx skills add harmsworth/agent-skills -g --skill auto-editor
+npx skills add harmsworth/agent-skills -g --skill frontend-code-review
 
 # 仅列出可用技能，不安装
 npx skills add harmsworth/agent-skills -l
@@ -37,6 +39,7 @@ cp -r skills/* ~/.agents/skills/
 # 或复制单个技能
 cp -r skills/droid-skill ~/.agents/skills/
 cp -r skills/auto-editor ~/.agents/skills/
+cp -r skills/frontend-code-review ~/.agents/skills/
 ```
 
 ---
@@ -97,6 +100,37 @@ cp ~/.agents/skills/auto-editor/config/.env.example ~/.agents/skills/auto-editor
 
 ---
 
+## frontend-code-review — 前端代码审查评分
+
+针对 Vue 3 / TypeScript / JavaScript 项目的 AI 代码审查评分系统。从 5 个维度对代码进行加权评分，并给出 P0-P3 等级评定。
+
+### 5 个审查维度
+
+| 维度 | 权重 | 核心内容 |
+|------|------|---------|
+| 命名规范 | 10% | 组件名、变量/函数名、常量 |
+| 注释规范 | 10% | JSDoc、步骤注释、TODO/FIXME/BUG 标签 |
+| Vue 3 TypeScript 规范 | 20% | 类型覆盖、ref 标注、defineProps/defineEmits/defineModel |
+| Vue 3 开发规范 | 25% | v-for key、代码组织顺序、scoped、shallowRef |
+| JS 开发规范 | 35% | 圈复杂度、函数式编程、逻辑完备性 |
+
+### 快速使用示例
+
+- "帮我审查这个 Vue 组件"
+- "给这段代码打个分"
+- "检查这段代码的命名规范"
+
+### 核心规则
+
+- **命名**：单个事件用 `handleClick`，多个事件用 `handleXXClick`（如 `handleSubmitClick`）。Modal 用 `XXModal`，Drawer 用 `XXDrawer`。
+- **注释**：复杂逻辑要有步骤注释。使用 `// TODO`、`// FIXME`、`// BUG`。
+- **Vue**：`v-for` 必须有 `:key`（不能用 `index`）。必须使用 `scoped`。大数据用 `shallowRef`。
+- **JS**：函数圈复杂度 ≤ 20。`switch` 必须有 `default`。`computed` 中禁止副作用。
+
+完整评分细则、等级定义和示例输出，请参阅 [`skills/frontend-code-review/README.md`](skills/frontend-code-review/README.md)。
+
+---
+
 ## 仓库结构
 
 ```
@@ -146,6 +180,12 @@ cp ~/.agents/skills/auto-editor/config/.env.example ~/.agents/skills/auto-editor
         └── config/
             ├── .env.example
             └── dictionary.txt
+    └── frontend-code-review/
+        ├── SKILL.md              # 主技能定义（5个审查维度 + 评分规则）
+        ├── index.json            # 技能元数据
+        ├── README.md             # 使用指南（含示例输出）
+        └── prompts/
+            └── review-prompt.md  # 详细审查提示词（供子代理使用）
 ```
 
 ## 参与贡献

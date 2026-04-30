@@ -11,6 +11,7 @@ A multi-skill repository for Claude Code. Contains tools for multi-agent softwar
 |-------|------|-------------|
 | **droid-skill** | [`skills/droid-skill/`](skills/droid-skill/) | The Droid Mission Framework: planning, worker execution, code review, user testing, and worker design. Works with any LLM. |
 | **auto-editor** | [`skills/auto-editor/`](skills/auto-editor/) | Talking-head video auto-editor. Detects mistakes, repetitions, silence, and filler words; generates review UI; one-click FFmpeg export. Cross-platform: macOS/Linux/WSL2. |
+| **frontend-code-review** | [`skills/frontend-code-review/`](skills/frontend-code-review/) | AI-powered code review scoring for Vue 3 / TypeScript / JavaScript. Reviews code across 5 dimensions (naming, comments, TS standards, Vue conventions, JS logic) with P0-P3 grading. |
 
 ## Installation
 
@@ -23,6 +24,7 @@ npx skills add harmsworth/agent-skills -g --all
 # Install a single skill
 npx skills add harmsworth/agent-skills -g --skill droid-skill
 npx skills add harmsworth/agent-skills -g --skill auto-editor
+npx skills add harmsworth/agent-skills -g --skill frontend-code-review
 
 # List available skills without installing
 npx skills add harmsworth/agent-skills -l
@@ -37,6 +39,7 @@ cp -r skills/* ~/.agents/skills/
 # Or copy a single skill
 cp -r skills/droid-skill ~/.agents/skills/
 cp -r skills/auto-editor ~/.agents/skills/
+cp -r skills/frontend-code-review ~/.agents/skills/
 ```
 
 ---
@@ -97,6 +100,37 @@ See [`skills/auto-editor/README.md`](skills/auto-editor/README.md) for full rule
 
 ---
 
+## frontend-code-review — Frontend Code Review Scoring
+
+An AI-powered code review scoring system for Vue 3 / TypeScript / JavaScript projects. Reviews code across 5 dimensions with weighted scoring and P0-P3 grading.
+
+### 5 Review Dimensions
+
+| Dimension | Weight | Focus |
+|-----------|--------|-------|
+| Naming Convention | 10% | Component names, variable/function names, constants |
+| Comments Convention | 10% | JSDoc, logic markers, TODO/FIXME/BUG tags |
+| Vue 3 TypeScript Standards | 20% | Type coverage, ref annotations, defineProps/defineEmits/defineModel |
+| Vue 3 Development Standards | 25% | v-for keys, code organization order, scoped styles, shallowRef |
+| JS Development Standards | 35% | Cyclomatic complexity, functional programming, logic completeness |
+
+### Quick usage examples
+
+- "Review this Vue component for me"
+- "Score this code submission"
+- "Check if this code follows naming conventions"
+
+### Key rules
+
+- **Naming**: Single event → `handleClick`. Multiple events → `handleXXClick` (e.g. `handleSubmitClick`). Modals → `XXModal`. Drawers → `XXDrawer`.
+- **Comments**: Complex logic needs step-by-step `//` comments. Use `// TODO`, `// FIXME`, `// BUG`.
+- **Vue**: `v-for` MUST have `:key` (never `index`). Use `scoped`. Prefer `shallowRef` for large data.
+- **JS**: Function complexity ≤ 20. `switch` MUST have `default`. No side effects in `computed`.
+
+See [`skills/frontend-code-review/README.md`](skills/frontend-code-review/README.md) for the full scoring rubric, grade definitions, and example output.
+
+---
+
 ## Repository structure
 
 ```
@@ -146,6 +180,12 @@ See [`skills/auto-editor/README.md`](skills/auto-editor/README.md) for full rule
         └── config/
             ├── .env.example
             └── dictionary.txt
+    └── frontend-code-review/
+        ├── SKILL.md              # Main skill definition (5 review dimensions + scoring)
+        ├── index.json            # Skill metadata
+        ├── README.md             # Usage guide with example output
+        └── prompts/
+            └── review-prompt.md  # Detailed review prompt for subagents
 ```
 
 ## Contributing
