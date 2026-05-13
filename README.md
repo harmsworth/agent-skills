@@ -12,6 +12,7 @@ A multi-skill repository for Claude Code. Contains tools for multi-agent softwar
 | **droid-skill** | [`skills/droid-skill/`](skills/droid-skill/) | The Droid Mission Framework: planning, worker execution, code review, user testing, and worker design. Works with any LLM. |
 | **auto-editor** | [`skills/auto-editor/`](skills/auto-editor/) | Talking-head video auto-editor. Detects mistakes, repetitions, silence, and filler words; generates review UI; one-click FFmpeg export. Cross-platform: macOS/Linux/WSL2. |
 | **frontend-code-review** | [`skills/frontend-code-review/`](skills/frontend-code-review/) | AI-powered code review scoring for Vue 3 / TypeScript / JavaScript. Reviews code across 5 dimensions (naming, comments, TS standards, Vue conventions, JS logic) with P0-P3 grading. |
+| **sjzy-code-review** | [`skills/sjzy-code-review/`](skills/sjzy-code-review/) | AI code review scoring for Vue 3 / TypeScript frontend and NestJS backend. Single-dimension scoring (100 - deductions) with blocker/major/minor/suggestion levels. Outputs strict JSON. |
 
 ## Installation
 
@@ -25,6 +26,7 @@ npx skills add harmsworth/agent-skills -g --all
 npx skills add harmsworth/agent-skills -g --skill droid-skill
 npx skills add harmsworth/agent-skills -g --skill auto-editor
 npx skills add harmsworth/agent-skills -g --skill frontend-code-review
+npx skills add harmsworth/agent-skills -g --skill sjzy-code-review
 
 # List available skills without installing
 npx skills add harmsworth/agent-skills -l
@@ -40,6 +42,7 @@ cp -r skills/* ~/.agents/skills/
 cp -r skills/droid-skill ~/.agents/skills/
 cp -r skills/auto-editor ~/.agents/skills/
 cp -r skills/frontend-code-review ~/.agents/skills/
+cp -r skills/sjzy-code-review ~/.agents/skills/
 ```
 
 ---
@@ -131,6 +134,66 @@ See [`skills/frontend-code-review/README.md`](skills/frontend-code-review/README
 
 ---
 
+## sjzy-code-review — SJZY Code Review Scoring
+
+An AI code review scoring system for Vue 3 / TypeScript frontend and NestJS backend. Uses single-dimension scoring (start from 100, deduct for each violation) with strict JSON output.
+
+### Key Differences from frontend-code-review
+
+| Aspect | frontend-code-review | sjzy-code-review |
+|--------|---------------------|------------------|
+| Scoring | Multi-dimension weighted (5 dims × weights) | Single-dimension (100 - deductions) |
+| Backend support | None | Full NestJS backend rules |
+| Deduction levels | Percentage of rule weight | Fixed points: blocker/major/minor |
+| Output format | Markdown report | Strict JSON |
+| Frontend import checking | Yes (type coverage) | **No** — does NOT check missing imports |
+| Backend security | N/A | Reported as suggestion only (points = 0) |
+
+### Scoring Levels
+
+| Level | Points | Description |
+|-------|--------|-------------|
+| blocker | 20-35 | Production failure, data error, compile failure |
+| major | 8-15 | Business logic defect, type safety risk |
+| minor | 2-5 | Convention, readability, maintainability |
+| suggestion | 0 | Better way exists; backend security issues |
+
+### Rule Coverage
+
+- **Public rules** (all files): correctness, stability, type contracts, data consistency
+- **Frontend rules** (Vue/TSX): magic numbers, type safety, Vue 3 structure, business interaction, styles
+- **NestJS backend rules** (controller/service/dto/entity/etc.): code style, idempotency, input validation, transactions, query boundaries
+
+### Quick usage examples
+
+- "Review this diff for me"
+- "帮我评审这个 PR 的代码"
+- "检查这段 NestJS controller 的代码"
+
+### Output example
+
+```json
+{
+  "score": 88,
+  "reason": "存在魔法数字和v-for缺少key的问题",
+  "deductions": [
+    {
+      "file": "src/components/UserList.vue",
+      "line": 42,
+      "category": "frontend.magic-number",
+      "severity": "minor",
+      "points": 3,
+      "reason": "使用魔法数字 status === 1 进行业务状态判断",
+      "suggestion": "定义常量：const STATUS_ACTIVE = 1"
+    }
+  ]
+}
+```
+
+See [`skills/sjzy-code-review/README.md`](skills/sjzy-code-review/README.md) for the full rules and JSON schema.
+
+---
+
 ## Repository structure
 
 ```
@@ -186,6 +249,12 @@ See [`skills/frontend-code-review/README.md`](skills/frontend-code-review/README
         ├── README.md             # Usage guide with example output
         └── prompts/
             └── review-prompt.md  # Detailed review prompt for subagents
+    └── sjzy-code-review/
+        ├── SKILL.md              # Main skill definition (entry point + overview)
+        ├── index.json            # Skill metadata
+        ├── README.md             # Usage guide with JSON examples
+        └── prompts/
+            └── review-prompt.md  # Full review rules: public + frontend + NestJS backend
 ```
 
 ## Contributing

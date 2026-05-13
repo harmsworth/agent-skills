@@ -12,6 +12,7 @@
 | **droid-skill** | [`skills/droid-skill/`](skills/droid-skill/) | Droid 任务框架：项目规划、工作执行、代码审查、用户测试、工作角色设计。兼容任意 LLM。 |
 | **auto-editor** | [`skills/auto-editor/`](skills/auto-editor/) | 口播视频智能剪辑。自动识别口误/重复/静音/卡顿，生成审核页面，一键 FFmpeg 剪辑导出。跨平台支持 macOS/Linux/WSL2。 |
 | **frontend-code-review** | [`skills/frontend-code-review/`](skills/frontend-code-review/) | 前端代码审查评分系统。针对 Vue 3 / TypeScript / JavaScript，从 5 个维度（命名、注释、TS 规范、Vue 规范、JS 逻辑）进行评分，支持 P0-P3 等级评定。 |
+| **sjzy-code-review** | [`skills/sjzy-code-review/`](skills/sjzy-code-review/) | 前端 + NestJS 后端代码审查评分系统。单维度计分（100 - 扣分），支持 blocker/major/minor/suggestion 四级，输出严格 JSON。 |
 
 ## 安装
 
@@ -25,6 +26,7 @@ npx skills add harmsworth/agent-skills -g --all
 npx skills add harmsworth/agent-skills -g --skill droid-skill
 npx skills add harmsworth/agent-skills -g --skill auto-editor
 npx skills add harmsworth/agent-skills -g --skill frontend-code-review
+npx skills add harmsworth/agent-skills -g --skill sjzy-code-review
 
 # 仅列出可用技能，不安装
 npx skills add harmsworth/agent-skills -l
@@ -40,6 +42,7 @@ cp -r skills/* ~/.agents/skills/
 cp -r skills/droid-skill ~/.agents/skills/
 cp -r skills/auto-editor ~/.agents/skills/
 cp -r skills/frontend-code-review ~/.agents/skills/
+cp -r skills/sjzy-code-review ~/.agents/skills/
 ```
 
 ---
@@ -131,6 +134,66 @@ cp ~/.agents/skills/auto-editor/config/.env.example ~/.agents/skills/auto-editor
 
 ---
 
+## sjzy-code-review — SJZY 代码审查评分
+
+针对 Vue 3 / TypeScript 前端和 NestJS 后端的 AI 代码审查评分系统。采用单维度计分（初始 100 分，按问题扣分），输出严格 JSON。
+
+### 与 frontend-code-review 的核心区别
+
+| 维度 | frontend-code-review | sjzy-code-review |
+|------|---------------------|------------------|
+| 评分方式 | 多维度加权（5 维度 × 权重） | 单维度（100 - 扣分合计） |
+| 后端支持 | 无 | 完整的 NestJS 后端规则 |
+| 扣分等级 | 按规则权重百分比 | 固定分值：blocker/major/minor |
+| 输出格式 | Markdown 报告 | 严格 JSON |
+| 前端 import 检查 | 是（类型覆盖检查） | **否** — 不检查缺少的 import |
+| 后端安全 | 不涉及 | 仅作为 suggestion（points = 0） |
+
+### 扣分等级
+
+| 等级 | 分值 | 说明 |
+|------|------|------|
+| blocker | 20-35 | 导致线上故障、数据错误、编译失败 |
+| major | 8-15 | 业务逻辑缺陷、类型安全风险 |
+| minor | 2-5 | 规范、可读性、可维护性问题 |
+| suggestion | 0 | 可改进点；后端安全问题 |
+
+### 规则覆盖
+
+- **公共规则**（所有文件）：正确性、稳定性、类型契约、数据一致性
+- **前端规则**（Vue/TSX）：魔法数字、类型安全、Vue 3 结构规范、业务交互、样式
+- **NestJS 后端规则**（controller/service/dto/entity 等）：代码规范、幂等保护、输入校验、事务、查询边界
+
+### 快速使用示例
+
+- "Review this diff for me"
+- "帮我评审这个 PR 的代码"
+- "检查这段 NestJS controller 的代码"
+
+### 输出示例
+
+```json
+{
+  "score": 88,
+  "reason": "存在魔法数字和v-for缺少key的问题",
+  "deductions": [
+    {
+      "file": "src/components/UserList.vue",
+      "line": 42,
+      "category": "frontend.magic-number",
+      "severity": "minor",
+      "points": 3,
+      "reason": "使用魔法数字 status === 1 进行业务状态判断",
+      "suggestion": "定义常量：const STATUS_ACTIVE = 1"
+    }
+  ]
+}
+```
+
+完整规则和 JSON 格式说明，请参阅 [`skills/sjzy-code-review/README.md`](skills/sjzy-code-review/README.md)。
+
+---
+
 ## 仓库结构
 
 ```
@@ -186,6 +249,12 @@ cp ~/.agents/skills/auto-editor/config/.env.example ~/.agents/skills/auto-editor
         ├── README.md             # 使用指南（含示例输出）
         └── prompts/
             └── review-prompt.md  # 详细审查提示词（供子代理使用）
+    └── sjzy-code-review/
+        ├── SKILL.md              # 主技能定义（入口 + 概述）
+        ├── index.json            # 技能元数据
+        ├── README.md             # 使用指南（含 JSON 示例）
+        └── prompts/
+            └── review-prompt.md  # 完整审查规则：公共 + 前端 + NestJS 后端
 ```
 
 ## 参与贡献

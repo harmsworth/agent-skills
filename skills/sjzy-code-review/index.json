@@ -1,0 +1,13 @@
+{
+  "name": "sjzy-code-review",
+  "version": "1.0.0",
+  "description": "AI code review scoring system for Vue 3 / TypeScript frontend and NestJS backend. Reviews code against comprehensive scoring rubric with blocker/major/minor/suggestion levels. Output: JSON.",
+  "author": "",
+  "license": "MIT",
+  "entry": "SKILL.md",
+  "files": [
+    "SKILL.md",
+    "README.md",
+    "prompts/review-prompt.md"
+  ]
+}
