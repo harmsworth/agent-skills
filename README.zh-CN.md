@@ -299,19 +299,24 @@ npx skills add harmsworth/agent-skills -g --skill kennedy-go
             └── review-prompt.md  # 完整审查规则：公共 + 前端 + NestJS 后端
     └── kennedy-if/
         ├── SKILL.md              # Go 分支逻辑规范
+        ├── README.md             # 使用指南
         └── index.json            # 技能元数据
     └── kennedy-ext/
         ├── SKILL.md              # 业务扩展/装饰器模式
+        ├── README.md             # 使用指南
         └── index.json            # 技能元数据
     └── kennedy-arch/
         ├── SKILL.md              # 分层架构类型规则
+        ├── README.md             # 使用指南
         └── index.json            # 技能元数据
     └── kennedy-pr/
         ├── SKILL.md              # Service Diffguard 审查工作流
+        ├── README.md             # 使用指南
         ├── index.json            # 技能元数据
         └── reference/            # 审查透镜提示词
     └── kennedy-go/
         ├── SKILL.md              # 现代 Go 规范
+        ├── README.md             # 使用指南
         └── index.json            # 技能元数据
 ```
 

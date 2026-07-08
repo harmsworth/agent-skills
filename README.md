@@ -299,19 +299,24 @@ Then invoke it directly in Claude Code:
             └── review-prompt.md  # Full review rules: public + frontend + NestJS backend
     └── kennedy-if/
         ├── SKILL.md              # Go branching logic guidelines
+        ├── README.md             # Usage guide
         └── index.json            # Skill metadata
     └── kennedy-ext/
         ├── SKILL.md              # Business extension/decorator pattern
+        ├── README.md             # Usage guide
         └── index.json            # Skill metadata
     └── kennedy-arch/
         ├── SKILL.md              # Layered architecture type rules
+        ├── README.md             # Usage guide
         └── index.json            # Skill metadata
     └── kennedy-pr/
         ├── SKILL.md              # Service Diffguard review workflow
+        ├── README.md             # Usage guide
         ├── index.json            # Skill metadata
         └── reference/            # Review lens prompts
     └── kennedy-go/
         ├── SKILL.md              # Modern Go guidelines
+        ├── README.md             # Usage guide
         └── index.json            # Skill metadata
 ```
 

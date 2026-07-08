@@ -6,6 +6,7 @@
   "license": "Apache-2.0",
   "entry": "SKILL.md",
   "files": [
-    "SKILL.md"
+    "SKILL.md",
+    "README.md"
   ]
 }
