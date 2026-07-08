@@ -1,0 +1,11 @@
+{
+  "name": "kennedy-arch",
+  "version": "1.0.0",
+  "description": "Layered architecture type-boundary rules from the Ardan Labs service project. Enforces primitive-at-edges and strong-types-in-Business conversions.",
+  "author": "Ardan Labs / harmsworth",
+  "license": "Apache-2.0",
+  "entry": "SKILL.md",
+  "files": [
+    "SKILL.md"
+  ]
+}

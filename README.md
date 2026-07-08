@@ -13,6 +13,11 @@ A multi-skill repository for Claude Code. Contains tools for multi-agent softwar
 | **auto-editor** | [`skills/auto-editor/`](skills/auto-editor/) | Talking-head video auto-editor. Detects mistakes, repetitions, silence, and filler words; generates review UI; one-click FFmpeg export. Cross-platform: macOS/Linux/WSL2. |
 | **frontend-code-review** | [`skills/frontend-code-review/`](skills/frontend-code-review/) | AI-powered code review scoring for Vue 3 / TypeScript / JavaScript. Reviews code across 5 dimensions (naming, comments, TS standards, Vue conventions, JS logic) with P0-P3 grading. |
 | **sjzy-code-review** | [`skills/sjzy-code-review/`](skills/sjzy-code-review/) | AI code review scoring for Vue 3 / TypeScript frontend and NestJS backend. Single-dimension scoring (100 - deductions) with blocker/major/minor/suggestion levels. Outputs strict JSON. |
+| **kennedy-if** | [`skills/kennedy-if/`](skills/kennedy-if/) | Go branching guidelines from the Ardan Labs service project. Invoke with `/kennedy-if`. |
+| **kennedy-ext** | [`skills/kennedy-ext/`](skills/kennedy-ext/) | Business-layer extension/decorator pattern for cross-cutting concerns. Invoke with `/kennedy-ext`. |
+| **kennedy-arch** | [`skills/kennedy-arch/`](skills/kennedy-arch/) | Layered architecture type-boundary rules: primitives at edges, strong types in Business. Invoke with `/kennedy-arch`. |
+| **kennedy-pr** | [`skills/kennedy-pr/`](skills/kennedy-pr/) | Service Diffguard PR review lenses for correctness, errors, docs, tests, boundaries, and simplification. Invoke with `/kennedy-pr`. |
+| **kennedy-go** | [`skills/kennedy-go/`](skills/kennedy-go/) | Modern Go syntax guidelines based on the target repository's Go version. Invoke with `/kennedy-go`. |
 
 ## Installation
 
@@ -27,6 +32,11 @@ npx skills add harmsworth/agent-skills -g --skill droid-skill
 npx skills add harmsworth/agent-skills -g --skill auto-editor
 npx skills add harmsworth/agent-skills -g --skill frontend-code-review
 npx skills add harmsworth/agent-skills -g --skill sjzy-code-review
+npx skills add harmsworth/agent-skills -g --skill kennedy-if
+npx skills add harmsworth/agent-skills -g --skill kennedy-ext
+npx skills add harmsworth/agent-skills -g --skill kennedy-arch
+npx skills add harmsworth/agent-skills -g --skill kennedy-pr
+npx skills add harmsworth/agent-skills -g --skill kennedy-go
 
 # List available skills without installing
 npx skills add harmsworth/agent-skills -l
@@ -43,6 +53,11 @@ cp -r skills/droid-skill ~/.agents/skills/
 cp -r skills/auto-editor ~/.agents/skills/
 cp -r skills/frontend-code-review ~/.agents/skills/
 cp -r skills/sjzy-code-review ~/.agents/skills/
+cp -r skills/kennedy-if ~/.agents/skills/
+cp -r skills/kennedy-ext ~/.agents/skills/
+cp -r skills/kennedy-arch ~/.agents/skills/
+cp -r skills/kennedy-pr ~/.agents/skills/
+cp -r skills/kennedy-go ~/.agents/skills/
 ```
 
 ---
@@ -194,6 +209,33 @@ See [`skills/sjzy-code-review/README.md`](skills/sjzy-code-review/README.md) for
 
 ---
 
+## Kennedy Service Skills — Ardan Labs Service Conventions
+
+Five repo-local skills copied from the Ardan Labs `service` project and renamed for slash-command usage:
+
+| Command | Skill | Use |
+|---------|-------|-----|
+| `/kennedy-if` | `kennedy-if` | Refactor shallow Go conditionals with default-first assignment and naked switches. |
+| `/kennedy-ext` | `kennedy-ext` | Add business-layer cross-cutting concerns through the `ExtBusiness`/`Extension` decorator pattern. |
+| `/kennedy-arch` | `kennedy-arch` | Enforce App / Business / Storage type boundaries and named converters. |
+| `/kennedy-pr` | `kennedy-pr` | Run Service Diffguard PR review lenses. |
+| `/kennedy-go` | `kennedy-go` | Apply modern Go syntax based on the repository's Go version. |
+
+Install one with:
+
+```bash
+npx skills add harmsworth/agent-skills -g --skill kennedy-go
+```
+
+Then invoke it directly in Claude Code:
+
+```text
+/kennedy-go
+/kennedy-pr review this diff
+```
+
+---
+
 ## Repository structure
 
 ```
@@ -255,6 +297,22 @@ See [`skills/sjzy-code-review/README.md`](skills/sjzy-code-review/README.md) for
         ├── README.md             # Usage guide with JSON examples
         └── prompts/
             └── review-prompt.md  # Full review rules: public + frontend + NestJS backend
+    └── kennedy-if/
+        ├── SKILL.md              # Go branching logic guidelines
+        └── index.json            # Skill metadata
+    └── kennedy-ext/
+        ├── SKILL.md              # Business extension/decorator pattern
+        └── index.json            # Skill metadata
+    └── kennedy-arch/
+        ├── SKILL.md              # Layered architecture type rules
+        └── index.json            # Skill metadata
+    └── kennedy-pr/
+        ├── SKILL.md              # Service Diffguard review workflow
+        ├── index.json            # Skill metadata
+        └── reference/            # Review lens prompts
+    └── kennedy-go/
+        ├── SKILL.md              # Modern Go guidelines
+        └── index.json            # Skill metadata
 ```
 
 ## Contributing

@@ -1,0 +1,11 @@
+{
+  "name": "kennedy-if",
+  "version": "1.0.0",
+  "description": "Go branching logic guidelines from the Ardan Labs service project. Prefer defaulting and naked switches over if/else chains for shallow branching.",
+  "author": "Ardan Labs / harmsworth",
+  "license": "Apache-2.0",
+  "entry": "SKILL.md",
+  "files": [
+    "SKILL.md"
+  ]
+}

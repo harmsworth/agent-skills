@@ -1,0 +1,17 @@
+{
+  "name": "kennedy-pr",
+  "version": "1.0.0",
+  "description": "Service Diffguard PR review lenses from the Ardan Labs service project for correctness, error visibility, docs, tests, boundaries, and simplification.",
+  "author": "Ardan Labs / harmsworth",
+  "license": "Apache-2.0",
+  "entry": "SKILL.md",
+  "files": [
+    "SKILL.md",
+    "reference/boundary-keeper.md",
+    "reference/doc-drift-check.md",
+    "reference/error-tripwire.md",
+    "reference/harness-map.md",
+    "reference/service-steward.md",
+    "reference/straight-line-pass.md"
+  ]
+}

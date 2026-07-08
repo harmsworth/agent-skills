@@ -13,6 +13,11 @@
 | **auto-editor** | [`skills/auto-editor/`](skills/auto-editor/) | 口播视频智能剪辑。自动识别口误/重复/静音/卡顿，生成审核页面，一键 FFmpeg 剪辑导出。跨平台支持 macOS/Linux/WSL2。 |
 | **frontend-code-review** | [`skills/frontend-code-review/`](skills/frontend-code-review/) | 前端代码审查评分系统。针对 Vue 3 / TypeScript / JavaScript，从 5 个维度（命名、注释、TS 规范、Vue 规范、JS 逻辑）进行评分，支持 P0-P3 等级评定。 |
 | **sjzy-code-review** | [`skills/sjzy-code-review/`](skills/sjzy-code-review/) | 前端 + NestJS 后端代码审查评分系统。单维度计分（100 - 扣分），支持 blocker/major/minor/suggestion 四级，输出严格 JSON。 |
+| **kennedy-if** | [`skills/kennedy-if/`](skills/kennedy-if/) | 来自 Ardan Labs service 项目的 Go 分支逻辑规范。使用 `/kennedy-if` 调用。 |
+| **kennedy-ext** | [`skills/kennedy-ext/`](skills/kennedy-ext/) | 业务层扩展/装饰器模式，用于横切关注点。使用 `/kennedy-ext` 调用。 |
+| **kennedy-arch** | [`skills/kennedy-arch/`](skills/kennedy-arch/) | 分层架构类型边界规则：边缘层用原始类型，Business 层用强类型。使用 `/kennedy-arch` 调用。 |
+| **kennedy-pr** | [`skills/kennedy-pr/`](skills/kennedy-pr/) | Service Diffguard PR 审查透镜：正确性、错误、文档、测试、边界和简化。使用 `/kennedy-pr` 调用。 |
+| **kennedy-go** | [`skills/kennedy-go/`](skills/kennedy-go/) | 基于目标仓库 Go 版本的现代 Go 语法规范。使用 `/kennedy-go` 调用。 |
 
 ## 安装
 
@@ -27,6 +32,11 @@ npx skills add harmsworth/agent-skills -g --skill droid-skill
 npx skills add harmsworth/agent-skills -g --skill auto-editor
 npx skills add harmsworth/agent-skills -g --skill frontend-code-review
 npx skills add harmsworth/agent-skills -g --skill sjzy-code-review
+npx skills add harmsworth/agent-skills -g --skill kennedy-if
+npx skills add harmsworth/agent-skills -g --skill kennedy-ext
+npx skills add harmsworth/agent-skills -g --skill kennedy-arch
+npx skills add harmsworth/agent-skills -g --skill kennedy-pr
+npx skills add harmsworth/agent-skills -g --skill kennedy-go
 
 # 仅列出可用技能，不安装
 npx skills add harmsworth/agent-skills -l
@@ -43,6 +53,11 @@ cp -r skills/droid-skill ~/.agents/skills/
 cp -r skills/auto-editor ~/.agents/skills/
 cp -r skills/frontend-code-review ~/.agents/skills/
 cp -r skills/sjzy-code-review ~/.agents/skills/
+cp -r skills/kennedy-if ~/.agents/skills/
+cp -r skills/kennedy-ext ~/.agents/skills/
+cp -r skills/kennedy-arch ~/.agents/skills/
+cp -r skills/kennedy-pr ~/.agents/skills/
+cp -r skills/kennedy-go ~/.agents/skills/
 ```
 
 ---
@@ -194,6 +209,33 @@ cp ~/.agents/skills/auto-editor/config/.env.example ~/.agents/skills/auto-editor
 
 ---
 
+## Kennedy Service Skills — Ardan Labs Service 约定
+
+这 5 个技能复制自 Ardan Labs `service` 项目，并重命名为 slash command 形式：
+
+| 命令 | 技能 | 用途 |
+|------|------|------|
+| `/kennedy-if` | `kennedy-if` | 用 default-first 赋值和裸 `switch` 重构浅层 Go 条件逻辑。 |
+| `/kennedy-ext` | `kennedy-ext` | 通过 `ExtBusiness`/`Extension` 装饰器模式添加业务层横切关注点。 |
+| `/kennedy-arch` | `kennedy-arch` | 检查 App / Business / Storage 类型边界和命名转换器。 |
+| `/kennedy-pr` | `kennedy-pr` | 运行 Service Diffguard PR 审查透镜。 |
+| `/kennedy-go` | `kennedy-go` | 根据仓库 Go 版本应用现代 Go 语法规范。 |
+
+单独安装示例：
+
+```bash
+npx skills add harmsworth/agent-skills -g --skill kennedy-go
+```
+
+安装后可在 Claude Code 中直接调用：
+
+```text
+/kennedy-go
+/kennedy-pr review this diff
+```
+
+---
+
 ## 仓库结构
 
 ```
@@ -255,6 +297,22 @@ cp ~/.agents/skills/auto-editor/config/.env.example ~/.agents/skills/auto-editor
         ├── README.md             # 使用指南（含 JSON 示例）
         └── prompts/
             └── review-prompt.md  # 完整审查规则：公共 + 前端 + NestJS 后端
+    └── kennedy-if/
+        ├── SKILL.md              # Go 分支逻辑规范
+        └── index.json            # 技能元数据
+    └── kennedy-ext/
+        ├── SKILL.md              # 业务扩展/装饰器模式
+        └── index.json            # 技能元数据
+    └── kennedy-arch/
+        ├── SKILL.md              # 分层架构类型规则
+        └── index.json            # 技能元数据
+    └── kennedy-pr/
+        ├── SKILL.md              # Service Diffguard 审查工作流
+        ├── index.json            # 技能元数据
+        └── reference/            # 审查透镜提示词
+    └── kennedy-go/
+        ├── SKILL.md              # 现代 Go 规范
+        └── index.json            # 技能元数据
 ```
 
 ## 参与贡献

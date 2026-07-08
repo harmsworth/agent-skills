@@ -1,0 +1,11 @@
+{
+  "name": "kennedy-ext",
+  "version": "1.0.0",
+  "description": "Business-layer extension pattern from the Ardan Labs service project. Add cross-cutting concerns through ExtBusiness/Extension decorators.",
+  "author": "Ardan Labs / harmsworth",
+  "license": "Apache-2.0",
+  "entry": "SKILL.md",
+  "files": [
+    "SKILL.md"
+  ]
+}

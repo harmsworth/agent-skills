@@ -1,0 +1,11 @@
+{
+  "name": "kennedy-go",
+  "version": "1.0.0",
+  "description": "Modern Go syntax guidelines from the Ardan Labs service project, based on the target repository's Go version.",
+  "author": "Ardan Labs / harmsworth",
+  "license": "Apache-2.0",
+  "entry": "SKILL.md",
+  "files": [
+    "SKILL.md"
+  ]
+}
